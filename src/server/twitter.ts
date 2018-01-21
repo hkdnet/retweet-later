@@ -1,4 +1,4 @@
-import * as Twit from 'twit'
+import * as Twit from "twit";
 
 export default class Twitter {
   private T: Twit;
@@ -8,10 +8,10 @@ export default class Twitter {
   }
 
   search(params?: Twit.Params) {
-    return this.T.get('search/tweets', params)
+    return this.T.get("search/tweets", params);
   }
 
   retweet(id: string, callback: Twit.Callback) {
-    return this.T.post('statuses/retweet', {id}, callback)
+    return this.T.post("statuses/retweet", { id }, callback);
   }
 }

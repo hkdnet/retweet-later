@@ -13,8 +13,8 @@ const connection = mysql.createConnection({
   database: "retweet_later"
 });
 connection.connect();
-import Twitter from './twitter'
-import config from './config'
+import Twitter from "./twitter";
+import config from "./config";
 
 const status = {
   FAILED: -1,
@@ -70,15 +70,15 @@ app.post("/retweet/:id", function(req, res) {
     consumer_key: config.consumerKey,
     consumer_secret: config.consumerSecret,
     access_token: config.accessToken,
-    access_token_secret: config.accessTokenSecret,
+    access_token_secret: config.accessTokenSecret
   });
   t.retweet(req.params.id, function(err, data, response) {
     if (err) {
       // TODO: 400?
-      return res.status(500).json(err)
+      return res.status(500).json(err);
     }
-    return res.json({message: 'success'})
-  })
+    return res.json({ message: "success" });
+  });
 });
 
 app.listen(3000, function() {
