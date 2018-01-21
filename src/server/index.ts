@@ -13,6 +13,8 @@ const connection = mysql.createConnection({
   database: "retweet_later"
 });
 connection.connect();
+import Twitter from './twitter'
+
 const status = {
   FAILED: -1,
   WAITING: 0,
@@ -60,6 +62,22 @@ app.get("/bookings", function(req, res) {
     if (error) throw error;
     res.json(results.map(formatBooking));
   });
+});
+
+app.post("/retweet/:id", function(req, res) {
+  const t = new Twitter({
+    consumer_key: process.env.CONSUMER_KEY || '',
+    consumer_secret: process.env.CONSUMER_SECRET || '',
+    access_token: process.env.ACCESS_TOKEN || '',
+    access_token_secret: process.env.ACCESS_TOKEN_SECRET || '',
+  });
+  t.retweet(req.params.id, function(err, data, response) {
+    if (err) {
+      // TODO: 400?
+      return res.status(500).json(err)
+    }
+    return res.json({message: 'success'})
+  })
 });
 
 app.listen(3000, function() {
